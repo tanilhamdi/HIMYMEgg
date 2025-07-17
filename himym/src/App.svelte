@@ -3,7 +3,7 @@
   import _ from "lodash";
   const episodes = rawText.split("\n");
 
-  let randNum = _.random(207, 208);
+  let randNum = _.random(0, 208);
 
   function opentheEp() {
     const ep = episodes[randNum];
