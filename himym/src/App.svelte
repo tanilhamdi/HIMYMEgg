@@ -2,13 +2,28 @@
   import rawText from "./himym.txt?raw";
   import _ from "lodash";
   const episodes = rawText.split("\n");
+
+  let randNum = _.random(207, 208);
+
   function opentheEp() {
-    const randNum = _.random(0, 207);
     const ep = episodes[randNum];
-    window.location.href = ep;
+    if (randNum == 208) {
+      return randNum;
+    } else {
+      window.location.href = ep;
+    }
   }
 </script>
 
+{#if randNum == 208}
+  <img
+    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7Aw290-nMttq5Z9DghMKc70OCMCv1l4q6Vg&s
+"
+    alt=""
+  />
+  <br />
+  <h1>Yarrami YEEE</h1>
+{:else}{/if}
 <div id="button-container">
   <div id="texts">You're a Loser</div>
   <button id="porn" on:click={opentheEp}>
