@@ -1,61 +1,84 @@
-# 🥚 HIMYM Egg
+# 💬 Beggtho? Chat & Dashboard App
 
-> *“Because sometimes you just need a random episode of How I Met Your Mother, and sometimes... well, you get something else.”*
-
-A lightweight Svelte single-page application that picks a random *How I Met Your Mother* episode link from a local text file and redirects you instantly. Built with Svelte, TypeScript, and a subtle dose of chaos.
+A full-stack real-time chat and dashboard application built with **React (Vite)** on the frontend and **Node.js (Express & Mongoose)** on the backend. It features secure JWT authentication via HTTP-only cookies, password hashing with bcrypt, and live message polling.
 
 ---
 
 ## 🚀 Features
 
-- **Random Episode Picker:** Grabs a random line from `himym.txt` using Lodash.
-- **Easter Egg:** Includes a special chance trigger for when luck isn't quite on your side.
-- **Svelte + Vite:** Lightning-fast setup and rendering.
-- **Dark Mode UI:** Sleek, modern dark-themed interface styled with custom CSS and a vibrant accent.
+- **Authentication System:** Secure Sign up (`/signin`) and Login (`/login`) with hashed passwords (`bcrypt`) and JWT stored safely in `HttpOnly` cookies.
+- **Real-time Chat:** Authenticated live chat room with automatic message scrolling and 5-second interval polling.
+- **Quick Links:** Integrated shortcut buttons to navigate to external services or related projects.
+- **Protected Routes:** React Router navigation guarded by backend session checks (`/api/me`).
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Svelte](https://svelte.dev/) (with TypeScript)
-- **Utility:** [Lodash](https://lodash.com/) (`_.random`)
-- **Styling:** Vanilla CSS (Flexbox, custom gradients, responsive layout)
+### Frontend
+- **React (Vite)**
+- **React Router DOM** (v6)
+- **CSS** (Custom styling)
+
+### Backend
+- **Node.js & Express**
+- **MongoDB & Mongoose** (Users & Messages collections)
+- **JSON Web Tokens (JWT)** & **Cookie Parser**
+- **Bcrypt** (Password hashing)
+- **CORS** (Configured for credentials and production/development environments)
+
+---
+
+## 📁 Project Structure
+
+```text
+├── src/
+│   ├── App.jsx        # Main dashboard and live chat interface
+│   ├── Login.jsx      # Login page component
+│   ├── Signin.jsx     # Registration page component
+│   ├── main.jsx       # React entry point & router definitions
+│   └── App.css        # Global and component styles
+├── server.js          # Express backend and database models
+└── package.json       # Project dependencies and scripts
+```
+
+---
+
+## ⚙️ Environment Variables
+
+To run the backend server, make sure you configure your `.env` file with the following variables:
+
+```env
+PORT=4000
+JWT_SECRET=your_super_secret_jwt_key
+MONGO_URI=your_mongodb_connection_string
+NODE_ENV=development # or production
+```
 
 ---
 
 ## 📦 Getting Started
 
-Follow these instructions to get a local copy up and running on your machine.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/tanilhamdi/beggtho.git
+cd beggtho
+```
 
-### Prerequisites
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-Make sure you have **Node.js** and **npm** (or yarn/pnpm/bun) installed.
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/tanilhamdi/HIMYMEgg.git
-   cd HIMYMEgg
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
-
-4. Open your browser and navigate to the local development URL provided by Vite.
-
----
-
-## 📝 Configuration
-
-- The app reads episode URLs/paths from a raw text file located at `./himym.txt` (`?raw` import via Vite). Ensure your list contains valid links line by line.
+### 3. Run the Application
+- **Start Backend:**
+  ```bash
+  node server.js
+  ```
+- **Start Frontend (Vite dev server):**
+  ```bash
+  npm run dev
+  ```
 
 ---
 
