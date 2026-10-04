@@ -1,87 +1,46 @@
-# 💬 Beggtho? Chat & Dashboard App
+## Svelte + TS + Vite
 
-A full-stack real-time chat and dashboard application built with **React (Vite)** on the frontend and **Node.js (Express & Mongoose)** on the backend. It features secure JWT authentication via HTTP-only cookies, password hashing with bcrypt, and live message polling.
+This template should help get you started developing with Svelte and TypeScript in Vite.
 
----
+## Recommended IDE Setup
 
-## 🚀 Features
+[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-- **Authentication System:** Secure Sign up (`/signin`) and Login (`/login`) with hashed passwords (`bcrypt`) and JWT stored safely in `HttpOnly` cookies.
-- **Real-time Chat:** Authenticated live chat room with automatic message scrolling and 5-second interval polling.
-- **Quick Links:** Integrated shortcut buttons to navigate to external services or related projects.
-- **Protected Routes:** React Router navigation guarded by backend session checks (`/api/me`).
+## Need an official Svelte framework?
 
----
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-## 🛠️ Tech Stack
+## Technical considerations
 
-### Frontend
-- **React (Vite)**
-- **React Router DOM** (v6)
-- **CSS** (Custom styling)
+**Why use this over SvelteKit?**
 
-### Backend
-- **Node.js & Express**
-- **MongoDB & Mongoose** (Users & Messages collections)
-- **JSON Web Tokens (JWT)** & **Cookie Parser**
-- **Bcrypt** (Password hashing)
-- **CORS** (Configured for credentials and production/development environments)
+- It brings its own routing solution which might not be preferable for some users.
+- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
 
----
+This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
 
-## 📁 Project Structure
+Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
 
-```text
-├── src/
-│   ├── App.jsx        # Main dashboard and live chat interface
-│   ├── Login.jsx      # Login page component
-│   ├── Signin.jsx     # Registration page component
-│   ├── main.jsx       # React entry point & router definitions
-│   └── App.css        # Global and component styles
-├── server.js          # Express backend and database models
-└── package.json       # Project dependencies and scripts
-```
+**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
 
----
+Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
 
-## ⚙️ Environment Variables
+**Why include `.vscode/extensions.json`?**
 
-To run the backend server, make sure you configure your `.env` file with the following variables:
+Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
 
-```env
-PORT=4000
-JWT_SECRET=your_super_secret_jwt_key
-MONGO_URI=your_mongodb_connection_string
-NODE_ENV=development # or production
-```
+**Why enable `allowJs` in the TS template?**
 
----
+While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
 
-## 📦 Getting Started
+**Why is HMR not preserving my local component state?**
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/tanilhamdi/beggtho.git
-cd beggtho
-```
+HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
 
-### 3. Run the Application
-- **Start Backend:**
-  ```bash
-  node server.js
-  ```
-- **Start Frontend (Vite dev server):**
-  ```bash
-  npm run dev
-  ```
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
+```ts
+// store.ts
+// An extremely simple external store
+import { writable } from 'svelte/store'
+export default writable(0)
